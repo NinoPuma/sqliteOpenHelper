@@ -30,6 +30,14 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         gestor = new AdminSQLiteOpenHelper(this, "politico", null, 1);
+        etEstudios = findViewById(R.id.etEstudios);
+        etNombre = findViewById(R.id.etNombre);
+        etEdad = findViewById(R.id.etEdad);
+        btn_agregar = findViewById(R.id.btn_agregar);
+        btn_modificar = findViewById(R.id.btn_modificar);
+        btn_borrar = findViewById(R.id.btn_borrar);
+        btn_consultar = findViewById(R.id.btn_consultar);
+
     }
     public void guardarPolitico(View view){
         SQLiteDatabase db = gestor.getWritableDatabase();
@@ -40,20 +48,31 @@ public class MainActivity extends AppCompatActivity {
         db.insert("LIDERESPOLITICOS", null, registro);
         db.close();
     }
-    public void consultarPolitica(View view) {
-        SQLiteDatabase db = gestor.getWritableDatabase();
+    public Politico consultarPolitica(View view) {
+        Politico politico1 = new Politico();
+        SQLiteDatabase db = gestor.getReadableDatabase();
         String[] aux = {etNombre.getText().toString()};
         Cursor fila = db.query("LIDERESPOLITICOS", null, "NOMBRE=?", aux, null, null, null);
-        if(fila.moveToFirst()){
-            etNombre.setText(fila.getString(0));
+        if (fila.moveToFirst()) {
+            politico1.setNombre(fila.getString(fila.getColumnIndex("NOMBRE")));
+            politico1.setEdad(fila.getInt(fila.getColumnIndex("EDAD")));
+            politico1.setEstudios(fila.getString(fila.getColumnIndex("ESTUDIOS")));
+            etEdad.setText(String.valueOf(politico1.getEdad()));
+            etEstudios.setText(politico1.getEstudios());
+            Toast.makeText(this, "Líder encontrado", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Líder no encontrado", Toast.LENGTH_SHORT).show();
         }
+        fila.close();
+        db.close();
+        return politico1;
     }
     public void modificarPolitica(View view){
         SQLiteDatabase db = gestor.getWritableDatabase();
         ContentValues registro = new ContentValues();
         registro.put("EDAD", Integer.parseInt(etEdad.getText().toString()));
         registro.put("ESTUDIOS", etEstudios.getText().toString());
-        int filasUpdateadas = db.update("LIDERESPOLITICOS", registro, "NOMBRE=" + etNombre.getText().toString(), null);
+        int filasUpdateadas = db.update("LIDERESPOLITICOS", registro, "NOMBRE = '" + etNombre.getText().toString() + "'", null);
         if (filasUpdateadas == 1){
             Toast.makeText(this, "Líder modificado", Toast.LENGTH_SHORT).show();
         }
@@ -64,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void borrarPolitico(View view){
         SQLiteDatabase db = gestor.getWritableDatabase();
-        int filasBorradas = db.delete("LIDERESPOLITICOS", "NOMBRE=" + etNombre.getText().toString(), null);
+        int filasBorradas = db.delete("LIDERESPOLITICOS", "NOMBRE = '" + etNombre.getText().toString() + "'", null);
         if (filasBorradas == 1){
             Toast.makeText(this, "Líder eliminado"+ etNombre.getText().toString(), Toast.LENGTH_SHORT).show();
         }

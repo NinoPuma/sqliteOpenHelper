@@ -17,17 +17,9 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
 
-    public AdminSQLiteOpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version, @Nullable DatabaseErrorHandler errorHandler) {
-        super(context, name, factory, version, errorHandler);
-    }
-
-    public AdminSQLiteOpenHelper(@Nullable Context context, @Nullable String name, int version, @NonNull SQLiteDatabase.OpenParams openParams) {
-        super(context, name, version, openParams);
-    }
-
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table LIDERESPOLITICOS(" + "NOMBRE TEXT PRIMARY KEY," + " EDAD INT," + "ESTUDIOS TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE LIDERESPOLITICOS (NOMBRE TEXT PRIMARY KEY, EDAD INTEGER, ESTUDIOS TEXT)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {

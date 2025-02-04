@@ -35,35 +35,28 @@
         android:id="@+id/btn_agregar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="guardarPolitico"
         android:text="Agregar Líder" />
 
     <Button
         android:id="@+id/btn_consultar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="consultarPolitica"
         android:text="Consultar Líder" />
 
     <Button
         android:id="@+id/btn_modificar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="modificarPolitica"
         android:text="Modificar Líder" />
 
     <Button
         android:id="@+id/btn_borrar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="borrarPolitico"
         android:text="Borrar Líder" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/btn_5"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Modificar Partidos Politicos" />
-    </FrameLayout>
 
 </LinearLayout>
